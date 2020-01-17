@@ -1,6 +1,6 @@
 package com.biofish.lifesummary;
 
-import com.biofish.lifesummary.service.UserServiceImpl;
+import com.biofish.lifesummary.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
