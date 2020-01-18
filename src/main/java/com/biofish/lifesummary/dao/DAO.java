@@ -5,10 +5,10 @@ import java.util.List;
 /**
  * DAO接口
  */
-public interface BaseDAO {
+public interface DAO {
     boolean insert(Object object);
     boolean update(Object object);
     boolean deleteById(int id);
-    Class getOneById(int id, Class clazz);
+    <T> T getOneById(int id, Class clazz);
     List getList();
 }

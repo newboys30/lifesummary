@@ -17,7 +17,7 @@ class LifesummaryApplicationTests {
 
     @Test
     void testInsert(){
-        userService.insertUser();
+
     }
 
 }
