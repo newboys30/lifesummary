@@ -1,5 +1,6 @@
 package com.biofish.lifesummary.dao;
 
+import com.biofish.lifesummary.utils.SQLHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,9 @@ public class DaoImpl implements DAO {
 
     @Override
     public boolean insert(Object object) {
+        String sql = SQLHelper.getInsertSql(object.getClass());
+        Object[] params = new Object[]{};
+
         return false;
     }
 

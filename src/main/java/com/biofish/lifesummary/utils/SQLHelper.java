@@ -1,7 +1,5 @@
 package com.biofish.lifesummary.utils;
 
-import com.sun.xml.internal.ws.spi.db.FieldSetter;
-
 import java.lang.reflect.Field;
 
 /**
