@@ -16,11 +16,13 @@ public class DaoImpl implements DAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private SQLHelper sqlHelper;
+
     @Override
     public boolean insert(Object object) {
-        String sql = SQLHelper.getInsertSql(object.getClass());
+        String sql = sqlHelper.getInsertSql(object.getClass());
         Object[] params = new Object[]{};
-
         return false;
     }
 

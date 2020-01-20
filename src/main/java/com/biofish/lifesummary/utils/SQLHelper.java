@@ -1,22 +1,28 @@
 package com.biofish.lifesummary.utils;
 
 import com.biofish.lifesummary.pojo.annotation.Increment;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 
 /**
- * sql帮助类
+ * 生成sql帮助类
  */
+@Component
 public class SQLHelper {
 
     /**
      * 自动封装InsertSql
-     * @param clazz
+     * @param obj
      * @return
      */
-    public static String getInsertSql(Class clazz){
-        checkNullObject(clazz);
+    public String getInsertSql(Object obj){
+        if(CheckUtil.checkNullObject(obj)){
+            throw new NullPointerException("传入对象不得为空");
+        }
 
+        Class clazz = obj.getClass();
         String tablename = clazz.getSimpleName();
         Field[] fields = clazz.getDeclaredFields();
         StringBuffer sql = new StringBuffer("INSERT INTO ").append(tablename).append(" (");
@@ -50,52 +56,86 @@ public class SQLHelper {
 
     /**
      * 自动封装updateSql
-     * @param clazz
+     * @param obj
      * @return
      */
-    public static String getUpdateSql(Class clazz) {
-        checkNullObject(clazz);
+    public String getUpdateSql(Object obj) {
+        if(CheckUtil.checkNullObject(obj)){
+            throw new NullPointerException("传入对象不得为空");
+        }
+
+        Class clazz = obj.getClass();
+        String primaryKey = getPrimaryKey(clazz);
+
+        if(!StringUtils.isNotBlank(primaryKey)){
+            throw new RuntimeException("pojo无主键无法生成Update语句");
+        }
 
         String tablename = clazz.getSimpleName();
         Field[] fields = clazz.getDeclaredFields();
 
-        String primaryKey = getPrimaryKey(clazz);
-        StringBuffer sql = new StringBuffer("UPDATE ").append(tablename).append(" set ");
+        StringBuffer sql = new StringBuffer("UPDATE ").append(tablename).append(" SET ");
         for(Field field : fields){
             if(!primaryKey.equals(field.getName())){
                 sql.append(field.getName()).append("=").append("?,");
             }
         }
         sql.deleteCharAt(sql.length() - 1);
-        sql.append(" where ").append(primaryKey).append("=?");
+        sql.append(" WHERE ").append(primaryKey).append("=?");
 
         return sql.toString();
     }
 
     /**
      * 自动封装查询单个Sql
-     * @param clazz
+     * @param obj
      * @return
      */
-    public static String getSelectSqlById(Class clazz){
-        checkNullObject(clazz);
+    public String getSelectSqlById(Object obj){
+        if(CheckUtil.checkNullObject(obj)){
+            throw new NullPointerException("传入对象不得为空");
+        }
+
+        Class clazz = obj.getClass();
+        String primaryKey = getPrimaryKey(clazz);
+        if(!StringUtils.isNotBlank(primaryKey)){
+            throw new RuntimeException("pojo无主键无法生成SelectById语句");
+        }
 
         String tablename = clazz.getSimpleName();
         Field[] fields = clazz.getDeclaredFields();
 
+        StringBuffer sql = new StringBuffer("SELECT ");
+        for(Field field : fields){
+            sql.append(field.getName()).append(",");
+        }
+        sql.deleteCharAt(sql.length() - 1);
+        sql.append(" FROM ").append(tablename).append(" WHERE ").append(primaryKey).append("=?");
+
+        return sql.toString();
+    }
+
+    /**
+     * 列表查询SQL
+     * @param obj
+     * @return
+     */
+    public String getListSql(Object obj){
+        Class clazz = obj.getClass();
+        String tablename = clazz.getSimpleName();
 
 
-        return null;
+        return tablename;
     }
 
     /**
      * 查询主键字段
      * @return 返回值为FieldName
      */
-    private static String getPrimaryKey(Class clazz) {
+    private String getPrimaryKey(Class clazz) {
 
-        if(null == clazz){
-            throw new NullPointerException("不可传入空对象！");
+        if(CheckUtil.checkNullObject(clazz)){
+            throw new NullPointerException("传入对象不得为空");
         }
 
         Field[] fields = clazz.getDeclaredFields();
@@ -108,9 +148,6 @@ public class SQLHelper {
         return null;
     }
 
-    private static void checkNullObject(Class clazz){
-        if(null == clazz){
-            throw new NullPointerException("不可传入空对象！");
-        }
-    }
+
+
 }
