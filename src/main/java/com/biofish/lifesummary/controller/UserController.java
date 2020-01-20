@@ -1,8 +1,7 @@
 package com.biofish.lifesummary.controller;
 
 import com.biofish.lifesummary.controller.base.BaseController;
-import com.biofish.lifesummary.entity.ResultModule;
-import com.biofish.lifesummary.entity.User;
+import com.biofish.lifesummary.pojo.T_User;
 import com.biofish.lifesummary.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +20,7 @@ public class UserController extends BaseController {
     private UserService userService;
 
     @RequestMapping(value="/saveuser")
-    public String saveUserInfo(User user){
+    public String saveUserInfo(T_User user){
         boolean status = userService.insertUser(user);
         return String.valueOf(status);
     }

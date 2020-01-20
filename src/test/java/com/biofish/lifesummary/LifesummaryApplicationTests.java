@@ -1,8 +1,8 @@
 package com.biofish.lifesummary;
 
-import com.biofish.lifesummary.service.impl.UserServiceImpl;
+import com.biofish.lifesummary.pojo.T_User;
+import com.biofish.lifesummary.utils.SQLHelper;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
@@ -12,12 +12,9 @@ class LifesummaryApplicationTests {
     void contextLoads() {
     }
 
-    @Autowired
-    private UserServiceImpl userService;
-
     @Test
-    void testInsert(){
-
+    void test(){
+        System.out.println(SQLHelper.getUpdateSql(T_User.class));
     }
 
 }

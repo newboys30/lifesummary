@@ -1,7 +1,7 @@
 package com.biofish.lifesummary.service.impl;
 
 import com.biofish.lifesummary.dao.DAO;
-import com.biofish.lifesummary.entity.User;
+import com.biofish.lifesummary.pojo.T_User;
 import com.biofish.lifesummary.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +18,12 @@ public class UserServiceImpl implements UserService {
     private DAO dao;
 
     @Override
-    public boolean insertUser(User user) {
+    public boolean insertUser(T_User user) {
         return dao.insert(user);
     }
 
     @Override
-    public boolean updateUser(User user) {
+    public boolean updateUser(T_User user) {
         return dao.update(user);
     }
 
@@ -34,11 +34,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Class getUserById(int id) {
-        return dao.getOneById(id, User.class);
+        return dao.getOneById(id, T_User.class);
     }
 
     @Override
-    public List<User> getUserList(User user) {
+    public List<T_User> getUserList(T_User user) {
         return null;
     }
 }

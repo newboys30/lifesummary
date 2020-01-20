@@ -1,15 +1,17 @@
-package com.biofish.lifesummary.entity;
+package com.biofish.lifesummary.pojo;
 
+import com.biofish.lifesummary.pojo.annotation.Increment;
 import lombok.Data;
 
 /**
- * 用户实体类
+ * 用户pojo,类名必须与数据库表名一致
  */
 @Data
-public class User {
+public class T_User {
     /**
      * id
      */
+    @Increment(isInrement = false)
     private int id;
     /**
      * 用户名/登录名
