@@ -1,10 +1,16 @@
 package com.biofish.lifesummary.utils;
 
-import com.biofish.lifesummary.pojo.annotation.Increment;
+import com.biofish.lifesummary.annotation.Increment;
+import com.biofish.lifesummary.pojo.base.PageModule;
+import com.biofish.lifesummary.pojo.base.QueryModule;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.ContextLoader;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * 生成sql帮助类
@@ -117,15 +123,34 @@ public class SQLHelper {
 
     /**
      * 列表查询SQL
-     * @param obj
+     * @param pageModule
      * @return
      */
-    public String getListSql(Object obj){
-        Class clazz = obj.getClass();
-        String tablename = clazz.getSimpleName();
+    public String getListSql(PageModule pageModule) throws Exception {
+        int pageNum = pageModule.getPageNum() == 0? 1:pageModule.getPageNum();
+        int pageSize = pageModule.getPageSize();
+        QueryModule queryModule = pageModule.getQueryModule();
+        if(CheckUtil.checkNullObject(queryModule)){
+            throw new NullPointerException("查询参数为空");
+        }
 
+        String classname = queryModule.getClassname();
+        Map param = queryModule.getParams();
+        StringBuffer sql = new StringBuffer("SELECT * FROM ").append(classname);
 
-        return tablename;
+        if(!param.isEmpty()){
+            sql.append(" WHERE ");
+            Iterator it = param.entrySet().iterator();
+            while (it.hasNext()){
+                Map.Entry entry = (Map.Entry) it.next();
+                if(!CheckUtil.checkNullObject(entry.getValue())){
+                    sql.append(entry.getKey().toString()).append(" and ");
+                }
+            }
+            sql.delete(sql.length() - 5, sql.length());
+        }
+        sql.append(" limit ").append((pageNum -1) * pageSize).append(",").append(pageNum * pageSize);
+        return sql.toString();
     }
 
     /**

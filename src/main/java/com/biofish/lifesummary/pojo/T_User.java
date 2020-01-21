@@ -1,6 +1,6 @@
 package com.biofish.lifesummary.pojo;
 
-import com.biofish.lifesummary.pojo.annotation.Increment;
+import com.biofish.lifesummary.annotation.Increment;
 import lombok.Data;
 
 /**
@@ -11,7 +11,7 @@ public class T_User {
     /**
      * id
      */
-    @Increment(isInrement = false)
+    @Increment(isInrement = true)
     private int id;
     /**
      * 用户名/登录名
