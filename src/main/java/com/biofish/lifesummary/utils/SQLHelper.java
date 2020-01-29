@@ -6,10 +6,8 @@ import com.biofish.lifesummary.pojo.base.QueryModule;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.ContextLoader;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -18,9 +16,6 @@ import java.util.Map;
  */
 @Component
 public class SQLHelper {
-
-    @Autowired
-    private ParamsUtil paramsUtil;
 
     /**
      * 自动封装InsertSql

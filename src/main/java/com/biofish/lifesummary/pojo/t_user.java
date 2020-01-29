@@ -2,12 +2,13 @@ package com.biofish.lifesummary.pojo;
 
 import com.biofish.lifesummary.annotation.Increment;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * 用户pojo,类名必须与数据库表名一致
  */
 @Data
-public class T_User {
+public class t_user {
     /**
      * id
      */
